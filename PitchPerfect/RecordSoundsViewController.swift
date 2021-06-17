@@ -16,6 +16,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var stopRecordingButton: UIButton!
     
+    //MARK: fixed strings contents
     let recording_in_progress_text = "Recording in Progress", tap_to_record_text = "Tap to Record", recording_not_successful_text = "recording was not successful", segueStopRecording = "stopRecording", recordingName = "recordedVoice.wav", separator = "/"
     enum RecordingAction {case startRecording, stopRecording}
     
@@ -27,6 +28,8 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
     }
+    
+    //MARK: Audio Functions
     
     @IBAction func recordAudio(_ sender: Any) {
         configureUI(for: .startRecording, with: recording_in_progress_text)
@@ -45,7 +48,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     @IBAction func stopRecording(_ sender: Any) {
-        configureUI(for: .startRecording, with: tap_to_record_text)
+        configureUI(for: .stopRecording, with: tap_to_record_text)
         audioRecorder.stop()
         let audioSession = AVAudioSession.sharedInstance()
         try! audioSession.setActive(false)
@@ -58,6 +61,8 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             print(recording_not_successful_text)
         }
     }
+    
+    //MARK: UI Functions
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueStopRecording {
